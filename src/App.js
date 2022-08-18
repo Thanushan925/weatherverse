@@ -6,7 +6,7 @@ function App() {
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=45.3848&lon=-70.8626&units=metric&appid=7fe57d3d219cd9512845e116e4c353c5`
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`
 
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
@@ -14,8 +14,7 @@ function App() {
         setData(response.data)
         console.log(response.data)
       })
-
-      setLocation("")
+      setLocation('')
     }
   }
 
@@ -27,7 +26,7 @@ function App() {
           onChange={event => setLocation(event.target.value)}
           onKeyPress={searchLocation}
           placeholder='Enter Location'
-          type="text"/>
+          type="text" />
       </div>
 
       <div className="container">
@@ -37,7 +36,7 @@ function App() {
           </div>
 
           <div className="temperature">
-            {data.main ? <h1>{data.main.temp.toFixed()}°C</h1> : null}
+            {data.main ? <h1>{((data.main.temp - 32) * (5 / 9)).toFixed()}°C</h1> : null}
           </div>
 
           <div className="description">
@@ -49,7 +48,7 @@ function App() {
           <div className="bottom">
             <div className="feels">
               <p>Feels Like</p>
-              {data.main ? <h2 className='bold'>{data.main.feels_like}°C</h2> : null}
+              {data.main ? <h2 className='bold'>{((data.main.feels_like - 32) * (5 / 9)).toFixed()}°C</h2> : null}
             </div>
 
             <div className="humidity">
